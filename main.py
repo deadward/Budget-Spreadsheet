@@ -1,7 +1,7 @@
 import openpyxl
 from utils import adjust_column_widths
 from budget_tables import create_budget_tables
-from budget_calendar import create_calendar
+from budget_calendar import CalendarFormater, create_calendar
 
 #comment
 
@@ -12,7 +12,8 @@ sheet.title = "Budget Tracker"
 
 # Call functions to create budget tables and calendar
 sheet = create_budget_tables(sheet)
-sheet = create_calendar(sheet, calendar_start_row=22)  # Adjust start_row as needed
+cal_formatter = CalendarFormater(sheet)
+sheet = cal_formatter.create_calendar(sheet, calendar_start_row=22)  # Adjust start_row as needed
 
 # Adjust column widths for better presentation
 adjust_column_widths(sheet)

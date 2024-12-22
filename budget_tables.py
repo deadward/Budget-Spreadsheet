@@ -7,6 +7,7 @@ def format_table_header(cell):
     cell.alignment = Alignment(horizontal="center", vertical="center")
 
 def create_budget_tables(sheet):
+    ## add all these sperate tables to their own functions
     # Account Totals
     sheet["A1"] = "Account Totals"
     sheet["A1"].font = Font(bold=True, size=14)
@@ -15,6 +16,7 @@ def create_budget_tables(sheet):
     format_table_header(sheet["A2"])
     format_table_header(sheet["B2"])
 
+    ## add these arrays of amounts and headers to constants
     accounts = ["Checking", "Savings", "Emergency", "CG Wax Studio", "Investment Checking"]
     amounts = [5000, 7000, 7500, 13000, 1000]
     for idx, (account, amount) in enumerate(zip(accounts, amounts), start=3):
@@ -41,6 +43,9 @@ def create_budget_tables(sheet):
 
     income_items = ["Checking Paycheck", "Savings Paycheck", "Emergency Paycheck", "Citi Paycheck", "Total Paycheck", "Bonus"]
     income_amounts = [3700, 211, 211, 125, "=SUM(E3:E6)", "=ROUND((173000 * 1 * 0.2) * 0.72, 0)"]
+    
+    # zip is grouping the items in the two arrays together [(checking paycheck, 3700), (savings paycheck, 211), etc]
+    # enumerate is allowing your for loop to iterate over this new array while keeping track of the idx
     for idx, (item, amount) in enumerate(zip(income_items, income_amounts), start=3):
         sheet[f"{get_column_letter(data_start_col)}{idx}"] = item
         sheet[f"{get_column_letter(data_start_col + 1)}{idx}"] = amount
